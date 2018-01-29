@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Victor Zagorodny']
   spec.email         = ['post.vittorius@gmail.com']
 
-  spec.summary       = 'RSpec formaatter that produces output easily consumable by automated tools'
+  spec.summary       = 'RSpec formater that produces output easily consumable by automated tools'
   spec.homepage      = 'https://github.com/vittorius/rspec_flat_formatter'
   spec.license       = 'MIT'
 
