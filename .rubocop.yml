@@ -1,0 +1,24 @@
+AllCops:
+  TargetRubyVersion: 2.4
+  DisplayCopNames: true
+
+Metrics/BlockLength:
+  Max: 10
+  Exclude:
+    - 'spec/**/*.rb'
+    - rspec_flat_formatter.gemspec
+
+Metrics/LineLength:
+  Max: 128
+
+Metrics/MethodLength:
+  Enabled: 20
+
+Metrics/ClassLength:
+  Max: 150
+
+Metrics/ModuleLength:
+  Max: 150
+
+Style/Documentation:
+  Enabled: false
