@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
-RSpec.describe RspecFlatFormatter do
+describe RspecFlatFormatter do
   it 'has a version number' do
     expect(RspecFlatFormatter::VERSION).not_to be nil
-  end
-
-  it 'does something useful' do
-    expect(false).to eq(true)
   end
 end
