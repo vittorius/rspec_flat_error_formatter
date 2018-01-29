@@ -2,16 +2,16 @@
 
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'rspec_flat_formatter/version'
+require 'rspec_flat_error_formatter/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'rspec_flat_formatter'
-  spec.version       = RspecFlatFormatter::VERSION
+  spec.name          = 'rspec_flat_error_formatter'
+  spec.version       = RspecFlatErrorFormatter::VERSION
   spec.authors       = ['Victor Zagorodny']
   spec.email         = ['post.vittorius@gmail.com']
 
   spec.summary       = 'RSpec formater that produces output easily consumable by automated tools'
-  spec.homepage      = 'https://github.com/vittorius/rspec_flat_formatter'
+  spec.homepage      = 'https://github.com/vittorius/rspec_flat_error_formatter'
   spec.license       = 'MIT'
 
   spec.metadata['allowed_push_host'] = 'https://rubygems.org'

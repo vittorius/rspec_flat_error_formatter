@@ -1,15 +1,15 @@
-# RspecFlatFormatter
+# RspecFlatErrorFormatter
 
-[![Build Status](https://travis-ci.org/vittorius/rspec_flat_formatter.svg?branch=master)](https://travis-ci.org/vittorius/rspec_flat_formatter)
+[![Build Status](https://travis-ci.org/vittorius/rspec_flat_error_formatter.svg?branch=master)](https://travis-ci.org/vittorius/rspec_flat_error_formatter)
 
-RSpec formater that produces output easily consumable by automated tools
+RSpec formater that produces errors output easily consumable by automated tools
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'rspec_flat_formatter'
+gem 'rspec_flat_error_formatter'
 ```
 
 And then execute:
@@ -18,7 +18,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install rspec_flat_formatter
+    $ gem install rspec_flat_error_formatter
 
 ## Usage
 
@@ -32,7 +32,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/rspec_flat_formatter.
+Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/rspec_flat_error_formatter.
 
 ## License
 

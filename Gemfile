@@ -7,5 +7,5 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-# Specify your gem's dependencies in rspec_flat_formatter.gemspec
+# Specify your gem's dependencies in rspec_flat_error_formatter.gemspec
 gemspec
