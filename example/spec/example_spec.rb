@@ -81,3 +81,4 @@ end
 
 # TODO: use shared examples
 # TODO: add examples using shared contexts
+# TODO: add errors outside of examples (outside of RSpec)
