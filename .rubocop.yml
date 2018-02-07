@@ -6,6 +6,7 @@ Metrics/BlockLength:
   Max: 10
   Exclude:
     - 'spec/**/*.rb'
+    - 'example/**/*.rb'
     - rspec_flat_error_formatter.gemspec
 
 Metrics/LineLength:
