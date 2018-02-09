@@ -18,13 +18,13 @@ describe 'specs with example errors' do
 
   it 'should be pending' do
     if defined? skip
-      skip
+      skip 'Just skipped'
     else
-      pending
+      pending 'Just pending'
     end
   end
 
-  it_should_behave_like 'shared examples'
+  it_behaves_like 'shared examples'
 end
 
 describe 'specs with non-example errors' do

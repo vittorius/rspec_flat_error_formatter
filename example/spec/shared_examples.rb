@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-context 'in a shared example' do
+shared_examples 'shared examples' do
   describe 'specs with example errors' do
     it 'should succeed in a shared example' do
       expect(true).to be(true)
@@ -16,9 +16,9 @@ context 'in a shared example' do
 
     it 'should be pending in a shared example' do
       if defined? skip
-        skip
+        skip 'Skipped in shared example'
       else
-        pending
+        pending 'Pending in shared example'
       end
     end
   end
