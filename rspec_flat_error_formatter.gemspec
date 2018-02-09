@@ -2,11 +2,10 @@
 
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'rspec_flat_error_formatter/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'rspec_flat_error_formatter'
-  spec.version       = RspecFlatErrorFormatter::VERSION
+  spec.version       = '0.0.1'
   spec.authors       = ['Victor Zagorodny']
   spec.email         = ['post.vittorius@gmail.com']
 
