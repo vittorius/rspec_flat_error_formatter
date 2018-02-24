@@ -37,7 +37,7 @@ describe RspecFlatErrorFormatter do
   end
 
   def example_spec_output
-    execute_example_spec
+    example_spec_output_lines.to_a.join("\n")
   end
 
   def example_spec_output_lines
@@ -47,7 +47,7 @@ describe RspecFlatErrorFormatter do
   end
 
   it 'outputs correct progress info for the entire test suite' do
-    expect(example_spec_output_lines.first).to eq '.**'
+    expect(example_spec_output_lines.first).to eq '.**FFFFF'
   end
 
   it 'has "Pending" block' do
@@ -63,4 +63,29 @@ describe RspecFlatErrorFormatter do
   it 'reports a pending example' do
     expect(example_spec_output_lines).to include('./spec/example_spec.rb:12: info: Pending (Just pending)')
   end
+
+  it 'has "Failures" block' do
+    expect(example_spec_output_lines).to include('Failures:')
+  end
+
+  it 'reports a failed expectation' do
+    expect(example_spec_output_lines).to include('./spec/example_spec.rb:17: error: expected true got false')
+  end
+
+  # rubocop:disable RSpec/ExampleLength
+  it 'reports a failed expectation having a diff' do
+    expect(example_spec_output).to(
+      include(<<~OUT)
+        ./spec/example_spec.rb:21: error: expected {:a => 1, :b => 2, :c => 3} to include {:d => 1, :e => (have attributes {:f => 2})}
+        Diff:
+        @@ -1,3 +1,4 @@
+        -:d => 1,
+        -:e => (have attributes {:f => 2}),
+        +:a => 1,
+        +:b => 2,
+        +:c => 3,
+      OUT
+    )
+  end
+  # rubocop:enable RSpec/ExampleLength
 end

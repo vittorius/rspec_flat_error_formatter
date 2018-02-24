@@ -21,8 +21,16 @@ class RspecFlatErrorFormatter < RSpec::Core::Formatters::ProgressFormatter
     output.puts formatted
   end
 
-  def dump_failures(_notification)
-    # no-op
+  def dump_failures(notification)
+    return if notification.failure_notifications.empty?
+
+    formatted = +"\nFailures:\n\n"
+
+    notification.failure_notifications.each do |failure|
+      formatted << "#{failure_message(failure)}\n"
+    end
+
+    output.puts formatted
   end
 
   def dump_summary(_notification)
@@ -44,8 +52,75 @@ class RspecFlatErrorFormatter < RSpec::Core::Formatters::ProgressFormatter
     )
   end
 
+  def failure_message(failure)
+    error_message(failure)
+  end
+
+  def error_message(failure)
+    error_message_for_example(failure.exception, failure.example)
+  end
+
+  def error_message_for_example(exception, example)
+    formatted_message(
+      bt_line: colorizer.wrap(format_backtrace_first_line(exception, example), :detail),
+      message: colorizer.wrap(error_failure_message_fragment(exception, example), :failure),
+      severity: colorizer.wrap('error', :failure)
+    )
+  end
+
+  def error_failure_message_fragment(exception, example)
+    exception_class = exception_class_name(exception)
+    message, diff = *exception.message.split('Diff:')
+    [
+      exception_class.start_with?('RSpec', 'Rspec') ? '' : "#{exception_class}: ", # only non-RSpec exception classes
+      message.tr("\n", ' ').squeeze(' ').strip, # making it a one-liner
+      formatted_cause(exception, example),
+      diff.nil? ? '' : "\nDiff:" + diff
+    ].join
+  end
+
   def formatted_message(bt_line:, severity:, message:)
     [bt_line, severity, message].join(TOKEN_SEPARATOR)
+  end
+
+  def exception_class_name(exception)
+    name = exception.class.name
+    name = '(anonymous error class)' if name == ''
+    name
+  end
+
+  # violently copy-pasted from RSpec::Core::Formatters::ExceptionPresenter#final_exception
+  def last_cause(exception, previous = [])
+    cause = exception.cause
+    if cause && !previous.include?(cause)
+      previous << cause
+      last_cause(cause, previous)
+    else
+      exception
+    end
+  end
+
+  def formatted_cause(exception, example)
+    cause = last_cause(exception)
+    if cause == exception
+      ''
+    else
+      ", caused by '#{exception_class_name(cause)}: #{formatted_cause_message(cause)}' "\
+      "at #{format_backtrace_first_line(cause, example)}"
+    end
+  end
+
+  def formatted_cause_message(cause)
+    if cause.message.empty?
+      class_name = exception_class_name(cause)
+      class_name.match?(/anonymous/) ? '<no message>' : class_name
+    else
+      cause.message
+    end
+  end
+
+  def format_backtrace_first_line(exception, example)
+    strip_bt_block(backtrace_formatter.format_backtrace(exception.backtrace, example.metadata).first)
   end
 
   def strip_bt_block(bt_line)
