@@ -93,5 +93,48 @@ describe RspecFlatErrorFormatter do
       )
     end
     # rubocop:enable RSpec/ExampleLength
+
+    it 'reports an error raised' do
+      expect(example_spec_output_lines).to include(
+        './spec/example_spec.rb:25: error: ArgumentError: Something went wrong with your arguments'
+      )
+    end
+
+    it 'reports an error raised along with its cause (having it own message)' do
+      expect(example_spec_output_lines).to include(
+        "./spec/example_spec.rb:32: error: ArgumentError: ArgumentError, caused by 'RuntimeError: This is the cause' "\
+        'at ./spec/example_spec.rb:30'
+      )
+    end
+
+    it 'reports an error raised along with its cause (without a message)' do
+      expect(example_spec_output_lines).to include(
+        "./spec/example_spec.rb:40: error: ArgumentError: ArgumentError, caused by 'RuntimeError: RuntimeError' "\
+        'at ./spec/example_spec.rb:38'
+      )
+    end
+
+    it 'reports a fixed but pending example' do
+      expect(example_spec_output_lines).to include(
+        "./spec/example_spec.rb:65: error: Expected pending 'Pending but actually fixed' to fail. No error was raised."
+      )
+    end
+
+    describe 'a single failure with multiple errors' do
+      it 'reports a failed expectation' do
+        expect(example_spec_output_lines).to include('./spec/example_spec.rb:57: error: expected false got true')
+      end
+
+      it 'reports an error raised in "after" block' do
+        expect(example_spec_output_lines).to include('./spec/example_spec.rb:61: error: RuntimeError: Error in "after" block')
+      end
+
+      it 'reports an error raised in "around" block and having a cause' do
+        expect(example_spec_output_lines).to include(
+          './spec/example_spec.rb:52: error: RuntimeError: Error in "around" block (re-raised), caused by '\
+          "'RuntimeError: This is the cause' at ./spec/example_spec.rb:50"
+        )
+      end
+    end
   end
 end
