@@ -2,19 +2,19 @@
 
 shared_examples 'shared examples' do
   describe 'specs with example errors' do
-    it 'should succeed in a shared example' do
+    it 'succeeds in a shared example' do
       expect(true).to be(true)
     end
 
-    it 'should fail in a shared example' do
+    it 'fails in a shared example' do
       expect(false).to be(true)
     end
 
-    it 'should raise in a shared example' do
+    it 'raises in a shared example' do
       raise ArgumentError
     end
 
-    it 'should be pending in a shared example' do
+    it 'is pending in a shared example' do
       if defined? skip
         skip 'Skipped in shared example'
       else
