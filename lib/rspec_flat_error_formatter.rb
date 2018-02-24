@@ -29,6 +29,7 @@ class RspecFlatErrorFormatter < RSpec::Core::Formatters::ProgressFormatter
   end
 
   protected
+
   def pending_example_message(example)
     [
       colorizer.wrap(backtrace_formatter.backtrace_line(example.location), :detail),

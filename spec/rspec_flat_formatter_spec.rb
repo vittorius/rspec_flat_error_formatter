@@ -6,8 +6,7 @@ require 'rspec_flat_error_formatter'
 describe RspecFlatErrorFormatter do
   EXAMPLE_DIR = File.expand_path('../../example', __FILE__)
 
-  # let(:formatter_arguments) { ['--format', 'RspecFlatErrorFormatter'] }
-  let(:formatter_arguments) { ['--format', 'documentation'] }
+  let(:formatter_arguments) { ['--format', 'RspecFlatErrorFormatter'] }
   let(:extra_arguments) { [] }
 
   let(:color_opt) do
@@ -37,7 +36,17 @@ describe RspecFlatErrorFormatter do
     safe_pty(command, EXAMPLE_DIR)
   end
 
-  let(:output) { execute_example_spec }
+  def example_spec_output
+    execute_example_spec
+  end
 
-  subject { puts output }
+  def example_spec_output_lines
+    Enumerator.new do |y|
+      execute_example_spec.each_line { |l| y << l.gsub(/\e\[\d+m/, '').chomp }
+    end
+  end
+
+  it 'outputs correct progress info for the entire test suite' do
+    expect(example_spec_output_lines.first).to eq '.'
+  end
 end

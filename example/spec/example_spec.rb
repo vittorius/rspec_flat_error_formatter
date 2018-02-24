@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe 'specs with errors' do
-  it 'should succeed' do
+  it 'succeeds' do
     expect(true).to be(true)
   end
 end
