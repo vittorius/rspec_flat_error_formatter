@@ -25,3 +25,11 @@ Metrics/ModuleLength:
 
 Style/Documentation:
   Enabled: false
+
+RSpec/DescribeClass:
+  Exclude:
+    - 'example/**/*.rb'
+
+RSpec/ExpectActual:
+  Exclude:
+    - 'example/**/*.rb'
