@@ -47,6 +47,20 @@ describe RspecFlatErrorFormatter do
   end
 
   it 'outputs correct progress info for the entire test suite' do
-    expect(example_spec_output_lines.first).to eq '.'
+    expect(example_spec_output_lines.first).to eq '.**'
+  end
+
+  it 'has "Pending" block' do
+    expect(example_spec_output_lines).to(
+      include("Pending: (Failures listed here are expected and do not affect your suite's status)")
+    )
+  end
+
+  it 'reports a skipped example' do
+    expect(example_spec_output_lines).to include('./spec/example_spec.rb:8: info: Skipped (Just skipped)')
+  end
+
+  it 'reports a pending example' do
+    expect(example_spec_output_lines).to include('./spec/example_spec.rb:12: info: Pending (Just pending)')
   end
 end
