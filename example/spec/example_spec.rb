@@ -40,6 +40,31 @@ describe 'specs with errors' do
       raise ArgumentError
     end
   end
+
+  # this test also covers RSpec::Expectations::MultipleExpectationsNotMetError but we don't test for it here explicitly
+  # because we don't want this gem to depend on rspec-expectations; there's no real need for it
+  describe 'spec with multiple errors' do
+    around do |example|
+      example.run
+      begin
+        raise 'This is the cause'
+      rescue # rubocop:disable Style/RescueStandardError
+        raise 'Error in "around" block (re-raised)'
+      end
+    end
+
+    it 'fails' do
+      expect(true).to be false
+    end
+
+    after do
+      raise 'Error in "after" block'
+    end
+  end
+
+  it 'fails because of fixed pending', pending: 'Pending but actually fixed' do
+    expect(true).to be true
+  end
 end
 
 # TODO: use shared examples

@@ -52,8 +52,37 @@ class RspecFlatErrorFormatter < RSpec::Core::Formatters::ProgressFormatter
     )
   end
 
+  def pending_fixed_failure?(failure)
+    failure.example.execution_result.pending_fixed?
+  end
+
+  def multiple_exception_error?(failure)
+    failure.example.exception.is_a?(RSpec::Core::MultipleExceptionError::InterfaceTag)
+  end
+
   def failure_message(failure)
-    error_message(failure)
+    if pending_fixed_failure?(failure)
+      pending_fixed_message(failure)
+    elsif multiple_exception_error?(failure)
+      multiple_exceptions_message(failure)
+    else
+      error_message(failure)
+    end
+  end
+
+  def pending_fixed_message(failure)
+    formatted_message(
+      bt_line: colorizer.wrap(format_backtrace_first_line(failure.exception, failure.example), :detail),
+      message: colorizer.wrap(
+        "Expected pending '#{failure.example.execution_result.pending_message}' to fail. No error was raised.",
+        :failure
+      ),
+      severity: colorizer.wrap('error', :failure)
+    )
+  end
+
+  def multiple_exceptions_message(failure)
+    failure.exception.all_exceptions.map { |ex| error_message_for_example(ex, failure.example) }.join("\n")
   end
 
   def error_message(failure)
