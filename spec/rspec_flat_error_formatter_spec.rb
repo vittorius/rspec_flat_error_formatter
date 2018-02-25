@@ -48,7 +48,7 @@ describe RspecFlatErrorFormatter do
 
   describe 'suite' do
     it 'outputs correct progress info for the entire test suite' do
-      expect(example_spec_output_lines).to include('.**FFFFFFF')
+      expect(example_spec_output_lines).to include('.**FFFFFFFFFF')
     end
   end
 
@@ -60,11 +60,11 @@ describe RspecFlatErrorFormatter do
     end
 
     it 'reports a skipped example' do
-      expect(example_spec_output_lines).to include('./spec/example_spec.rb:8: info: Skipped (Just skipped)')
+      expect(example_spec_output_lines).to include('./spec/example_spec.rb:10: info: Skipped (Just skipped)')
     end
 
     it 'reports a pending example' do
-      expect(example_spec_output_lines).to include('./spec/example_spec.rb:12: info: Pending (Just pending)')
+      expect(example_spec_output_lines).to include('./spec/example_spec.rb:14: info: Pending (Just pending)')
     end
   end
 
@@ -74,14 +74,14 @@ describe RspecFlatErrorFormatter do
     end
 
     it 'reports a failed expectation' do
-      expect(example_spec_output_lines).to include('./spec/example_spec.rb:17: error: expected true got false')
+      expect(example_spec_output_lines).to include('./spec/example_spec.rb:19: error: expected true got false')
     end
 
     # rubocop:disable RSpec/ExampleLength
     it 'reports a failed expectation having a diff' do
       expect(example_spec_output).to(
         include(<<~OUT)
-          ./spec/example_spec.rb:21: error: expected {:a => 1, :b => 2, :c => 3} to include {:d => 1, :e => (have attributes {:f => 2})}
+          ./spec/example_spec.rb:23: error: expected {:a => 1, :b => 2, :c => 3} to include {:d => 1, :e => (have attributes {:f => 2})}
           Diff:
           @@ -1,3 +1,4 @@
           -:d => 1,
@@ -96,44 +96,76 @@ describe RspecFlatErrorFormatter do
 
     it 'reports an error raised' do
       expect(example_spec_output_lines).to include(
-        './spec/example_spec.rb:25: error: ArgumentError: Something went wrong with your arguments'
+        './spec/example_spec.rb:27: error: ArgumentError: Something went wrong with your arguments'
       )
     end
 
     it 'reports an error raised along with its cause (having it own message)' do
       expect(example_spec_output_lines).to include(
-        "./spec/example_spec.rb:32: error: ArgumentError: ArgumentError, caused by 'RuntimeError: This is the cause' "\
-        'at ./spec/example_spec.rb:30'
+        "./spec/example_spec.rb:34: error: ArgumentError: ArgumentError, caused by 'RuntimeError: This is the cause' "\
+        'at ./spec/example_spec.rb:32'
       )
     end
 
     it 'reports an error raised along with its cause (without a message)' do
       expect(example_spec_output_lines).to include(
-        "./spec/example_spec.rb:40: error: ArgumentError: ArgumentError, caused by 'RuntimeError: RuntimeError' "\
-        'at ./spec/example_spec.rb:38'
+        "./spec/example_spec.rb:42: error: ArgumentError: ArgumentError, caused by 'RuntimeError: RuntimeError' "\
+        'at ./spec/example_spec.rb:40'
       )
     end
 
     it 'reports a fixed but pending example' do
       expect(example_spec_output_lines).to include(
-        "./spec/example_spec.rb:65: error: Expected pending 'Pending but actually fixed' to fail. No error was raised."
+        "./spec/example_spec.rb:67: error: Expected pending 'Pending but actually fixed' to fail. No error was raised."
       )
     end
 
-    describe 'a single failure with multiple errors' do
+    describe 'a failure with multiple errors' do
       it 'reports a failed expectation' do
-        expect(example_spec_output_lines).to include('./spec/example_spec.rb:57: error: expected false got true')
+        expect(example_spec_output_lines).to include('./spec/example_spec.rb:59: error: expected false got true')
       end
 
       it 'reports an error raised in "after" block' do
-        expect(example_spec_output_lines).to include('./spec/example_spec.rb:61: error: RuntimeError: Error in "after" block')
+        expect(example_spec_output_lines).to include('./spec/example_spec.rb:63: error: RuntimeError: Error in "after" block')
       end
 
       it 'reports an error raised in "around" block and having a cause' do
         expect(example_spec_output_lines).to include(
-          './spec/example_spec.rb:52: error: RuntimeError: Error in "around" block (re-raised), caused by '\
-          "'RuntimeError: This is the cause' at ./spec/example_spec.rb:50"
+          './spec/example_spec.rb:54: error: RuntimeError: Error in "around" block (re-raised), caused by '\
+          "'RuntimeError: This is the cause' at ./spec/example_spec.rb:52"
         )
+      end
+    end
+
+    describe 'failures in shared context' do
+      it 'reports an error in "before" block' do
+        expect(example_spec_output_lines).to include(
+          './spec/shared_contexts.rb:5: error: RuntimeError: Error in "before" block'
+        )
+      end
+
+      it 'reports an error in "let" definition' do
+        expect(example_spec_output_lines).to include(
+          './spec/shared_contexts.rb:10: error: RuntimeError: Error in "let" definition'
+        )
+      end
+
+      describe 'a failure with multiple errors' do
+        it 'reports a failed expectation' do
+          expect(example_spec_output_lines).to include('./spec/example_spec.rb:95: error: expected false got true')
+        end
+
+        it 'reports an error raised in "after" block' do
+          expect(example_spec_output_lines).to include(
+            './spec/shared_contexts.rb:15: error: RuntimeError: Error in "after" block'
+          )
+        end
+
+        it 'reports an error raised in "around" block' do
+          expect(example_spec_output_lines).to include(
+            './spec/shared_contexts.rb:22: error: RuntimeError: Error in "around" block'
+          )
+        end
       end
     end
   end

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'shared_contexts'
+
 describe 'specs with errors' do
   it 'succeeds' do
     expect(true).to be(true)
@@ -65,7 +67,35 @@ describe 'specs with errors' do
   it 'fails because of fixed pending', pending: 'Pending but actually fixed' do
     expect(true).to be true
   end
+
+  context 'with error(s) in shared context' do
+    context 'with error in "before" block' do
+      include_context 'when in "before" block'
+
+      it 'succeeds' do
+        expect(true).to be(true)
+      end
+    end
+
+    context 'with error in "let" block' do
+      include_context 'when in "let" definition'
+
+      before { error }
+
+      it 'succeeds' do
+        expect(true).to be(true)
+      end
+    end
+
+    context 'with multiple errors in an example' do
+      include_context 'when in "after" block'
+      include_context 'when in "around" block: after the example'
+
+      it 'fails' do
+        expect(true).to be(false)
+      end
+    end
+  end
 end
 
 # TODO: use shared examples
-# TODO: add examples using shared contexts
