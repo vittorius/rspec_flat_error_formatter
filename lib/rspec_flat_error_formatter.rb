@@ -86,6 +86,7 @@ class RspecFlatErrorFormatter < RSpec::Core::Formatters::ProgressFormatter
     )
   end
 
+  # TODO: skip shared example stack frame printing for sub-errors
   def multiple_exceptions_message(failure)
     failure.exception.all_exceptions.map { |ex| error_message_for_example(ex, failure.example) }.join("\n")
   end
