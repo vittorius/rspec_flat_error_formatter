@@ -7,7 +7,7 @@ class RspecFlatErrorFormatter < RSpec::Core::Formatters::ProgressFormatter
   VERSION = '0.0.1'
   TOKEN_SEPARATOR = ': '
 
-  RSpec::Core::Formatters.register self, :example_passed, :example_pending, :example_failed, :start_dump
+  RSpec::Core::Formatters.register self
 
   def dump_pending(notification)
     return if notification.pending_notifications.empty?
