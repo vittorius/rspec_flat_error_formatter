@@ -16,13 +16,6 @@ shared_context 'when in "after" block' do
   end
 end
 
-shared_context 'when in "around" block: before the example' do
-  around do |example|
-    raise 'Error in "around" block'
-    example.run # rubocop:disable Lint/UnreachableCode
-  end
-end
-
 shared_context 'when in "around" block: after the example' do
   around do |example|
     example.run
