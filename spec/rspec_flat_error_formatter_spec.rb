@@ -48,7 +48,7 @@ describe RspecFlatErrorFormatter do
 
   describe 'suite' do
     it 'outputs correct progress info for the entire test suite' do
-      expect(example_spec_output_lines.first).to eq '.**FFFFFFF'
+      expect(example_spec_output_lines).to include('.**FFFFFFF')
     end
   end
 

@@ -9,6 +9,11 @@ class RspecFlatErrorFormatter < RSpec::Core::Formatters::ProgressFormatter
 
   RSpec::Core::Formatters.register self
 
+  def start(notification)
+    output.puts pluralize(notification.count, 'example')
+    output.puts
+  end
+
   def dump_pending(notification)
     return if notification.pending_notifications.empty?
 
@@ -156,8 +161,12 @@ class RspecFlatErrorFormatter < RSpec::Core::Formatters::ProgressFormatter
     bt_line.split(':in').first
   end
 
+  def pluralize(count, string)
+    "#{count} #{string}#{'s' unless count.to_f == 1}"
+  end
+
   def colorizer
-    ::RSpec::Core::Formatters::ConsoleCodes
+    RSpec::Core::Formatters::ConsoleCodes
   end
 
   def backtrace_formatter
