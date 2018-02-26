@@ -3,14 +3,30 @@
 require 'rspec/core/formatters/console_codes'
 require 'rspec/core/formatters/progress_formatter'
 
-class RspecFlatErrorFormatter < RSpec::Core::Formatters::ProgressFormatter
+class RspecFlatErrorFormatter < RSpec::Core::Formatters::BaseTextFormatter
   VERSION = '0.0.1'
   TOKEN_SEPARATOR = ': '
 
-  RSpec::Core::Formatters.register self
+  RSpec::Core::Formatters.register self, :example_passed, :example_pending, :example_failed, :start_dump
 
   def start(notification)
     output.puts pluralize(notification.count, 'example')
+    output.puts
+  end
+
+  def example_passed(_notification)
+    output.print colorizer.wrap('.', :success)
+  end
+
+  def example_pending(_notification)
+    output.print colorizer.wrap('*', :pending)
+  end
+
+  def example_failed(_notification)
+    output.print colorizer.wrap('F', :failure)
+  end
+
+  def start_dump(_notification)
     output.puts
   end
 
