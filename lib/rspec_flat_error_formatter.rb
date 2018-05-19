@@ -6,7 +6,6 @@ require 'rspec/core/formatters/console_codes'
 require 'rspec/core/formatters/base_text_formatter'
 
 class RspecFlatErrorFormatter < RSpec::Core::Formatters::BaseTextFormatter
-  VERSION = '0.0.1'
   TOKEN_SEPARATOR = ': '
 
   RSpec::Core::Formatters.register self, :example_passed, :example_pending, :example_failed, :start_dump

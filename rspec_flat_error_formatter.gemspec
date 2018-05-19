@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
+require_relative './lib/rspec_flat_error_formatter/version'
+
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = 'rspec_flat_error_formatter'
-  spec.version       = '0.0.1'
+  spec.version       = RspecFlatErrorFormatterVersion::VERSION
   spec.authors       = ['Victor Zagorodny']
   spec.email         = ['post.vittorius@gmail.com']
 
