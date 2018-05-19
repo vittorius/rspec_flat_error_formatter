@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
+require 'rspec/support'
+require 'rspec/core'
 require 'rspec/core/formatters/console_codes'
-require 'rspec/core/formatters/progress_formatter'
+require 'rspec/core/formatters/base_text_formatter'
 
 class RspecFlatErrorFormatter < RSpec::Core::Formatters::BaseTextFormatter
   VERSION = '0.0.1'
