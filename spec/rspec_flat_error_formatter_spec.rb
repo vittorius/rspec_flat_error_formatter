@@ -4,7 +4,7 @@ require 'pty'
 require 'rspec_flat_error_formatter'
 
 describe RspecFlatErrorFormatter do
-  EXAMPLE_DIR = File.expand_path('../../example', __FILE__)
+  EXAMPLE_DIR = File.expand_path('../example', __dir__)
 
   let(:formatter_arguments) { ['--format', 'RspecFlatErrorFormatter'] }
   let(:extra_arguments) { [] }
