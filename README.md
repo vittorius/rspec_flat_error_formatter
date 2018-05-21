@@ -28,7 +28,7 @@ Or install it yourself as:
 
 ### Basic
 
-Pass as a value of the `--format` (or `-f`) option to the RSpec
+Pass as a value of the `--format` (or `-f`) option to the RSpec:
 
     $ bundle exec rspec --format RSpecFlatErrorFormatter
 
@@ -47,9 +47,9 @@ After you've configured the formatter to be used by RSpec, you can consume its o
 
 ### VS Code tasks
 
-Here's the example of configuring `rspec` and `guard-rspec` using VS Code tasks to consume the output of RspecFlatErrorFormatter.
+Here's an example of configuring `rspec` and `guard-rspec` using VS Code tasks to consume the output of RspecFlatErrorFormatter.
 
-Create a `tasks.json` file with contents:
+Create a `.vscode` dir under your project or workspace dir. Then, create a `tasks.json` file under it with the following contents:
 
 ```json
 {
