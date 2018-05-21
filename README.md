@@ -4,6 +4,10 @@
 
 RSpec formater that produces errors output easily consumable by automated tools
 
+## Rationale
+
+Initially, this tool came out as an attempt to use the [Visual Studio Code tasks](https://code.visualstudio.com/docs/editor/tasks) for running the RSpec and scanning its output to locate and test the failing specs very quickly. VS Code offers the mechanism of [problem matchers](https://code.visualstudio.com/docs/editor/tasks#_defining-a-problem-matcher) that are, in fact, regular expressions to filter the output of a task line by line and feed the extracted info to the Problems view.
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -22,7 +26,87 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Basic
+
+Pass as a value of the `--format` (or `-f`) option to the RSpec
+
+    $ bundle exec rspec --format RSpecFlatErrorFormatter
+
+
+Or add as to the default set of options via `.rspec` file:
+
+```
+--format RSpecFlatErrorFormatter
+```
+
+Now run the tests as usual:
+
+    $ bundle exec rspec
+
+After you've configured the formatter to be used by RSpec, you can consume its output by the tools you have to automate your test results navigation.
+
+### VS Code tasks
+
+Here's the example of configuring `rspec` and `guard-rspec` using VS Code tasks to consume the output of RspecFlatErrorFormatter.
+
+Create a `tasks.json` file with contents:
+
+```json
+{
+  "version": "2.0.0",
+  "tasks": [
+    // rspec
+    {
+      "label": "rspec",
+      "type": "shell",
+      "command": "rspec",
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always"
+      },
+      "problemMatcher": {
+        "fileLocation": ["relative", "${workspaceFolder}"],
+        "pattern": {
+          "regexp": "^(.*):(\\d*):\\s(error|info):\\s(.*)$",
+          "file": 1,
+          "line": 2,
+          "severity": 3,
+          "message": 4
+        }
+      }
+    },
+    // guard-rspec
+    {
+      "label": "guard",
+      "type": "shell",
+      "command": "bundle exec guard",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "fileLocation": ["relative", "${workspaceFolder}"],
+        "pattern": {
+          "regexp": "^(.*):(\\d*):\\s(error|info):\\s(.*)$",
+          "file": 1,
+          "line": 2,
+          "severity": 3,
+          "message": 4
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^\\d{2}:\\d{2}:\\d{2} - INFO - Running",
+          "endsPattern": "^Randomized with"
+        }
+      }
+    }
+  ]
+}
+
+```
 
 ## Development
 
