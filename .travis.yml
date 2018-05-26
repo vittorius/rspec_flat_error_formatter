@@ -1,5 +1,13 @@
 language: ruby
+rvm:
+  - 2.1
+  - 2.2
+  - 2.3
+  - 2.4
+  - 2.5
+  - ruby-head
 cache: bundler
+
 before_install: gem install bundler -v 1.16.1
 
 # we're running the rubocop in "before_script" hook to fail the build immediately and not waste time on running the "script"
