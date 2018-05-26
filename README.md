@@ -8,6 +8,18 @@ RSpec formater that produces errors output easily consumable by automated tools
 
 Initially, this tool came out as an attempt to use the [Visual Studio Code tasks](https://code.visualstudio.com/docs/editor/tasks) for running the RSpec and scanning its output to locate and test the failing specs very quickly. VS Code offers the mechanism of [problem matchers](https://code.visualstudio.com/docs/editor/tasks#_defining-a-problem-matcher) that are, in fact, regular expressions to filter the output of a task line by line and feed the extracted info to the Problems view.
 
+## Requirements
+
+The following **MRI** Ruby versions are officially supported:
+
+* 2.1
+* 2.2
+* 2.3
+* 2.4
+* 2.5
+
+Although it's not recommended to use 2.1 or 2.2 as their support period has ended. The are no plans to support JRuby or Rubinius for now. But if the community has a strong request for it, it will likely be added.
+
 ## Installation
 
 Add this line to your application's Gemfile:
