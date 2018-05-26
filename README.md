@@ -80,7 +80,7 @@ Create a `.vscode` dir under your project or workspace dir. Then, create a `task
       "problemMatcher": {
         "fileLocation": ["relative", "${workspaceFolder}"],
         "pattern": {
-          "regexp": "^(.*):(\\d*):\\s(error|info):\\s(.*)$",
+          "regexp": "^(\\./.*?\\.rb):(\\d+?):\\s(error|info):\\s(.*)$",
           "file": 1,
           "line": 2,
           "severity": 3,
@@ -102,7 +102,7 @@ Create a `.vscode` dir under your project or workspace dir. Then, create a `task
       "problemMatcher": {
         "fileLocation": ["relative", "${workspaceFolder}"],
         "pattern": {
-          "regexp": "^(.*):(\\d*):\\s(error|info):\\s(.*)$",
+          "regexp": "^(\\./.*?\\.rb):(\\d+?):\\s(error|info):\\s(.*)$",
           "file": 1,
           "line": 2,
           "severity": 3,
