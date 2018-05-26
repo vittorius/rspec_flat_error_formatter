@@ -41,12 +41,19 @@ describe RspecFlatErrorFormatter do
   end
 
   def example_spec_output_lines
+    # TODO: create a specical class to this enumerator to pretty-print its content for tests output
     Enumerator.new do |y|
       execute_example_spec.each_line { |l| y << l.gsub(/\e\[\d+m/, '').chomp }
     end
   end
 
   describe 'suite' do
+    if ENV['RFEF_TESTS_DEBUG'] =~ /y(es)?|t(rue)?|1/i
+      it 'prints the entire test suite', :focus do # rubocop:disable RSpec/Focus
+        puts execute_example_spec
+      end
+    end
+
     it 'outputs correct progress info for the entire test suite' do
       expect(example_spec_output_lines).to include('.**FFFFFFFFFF')
     end

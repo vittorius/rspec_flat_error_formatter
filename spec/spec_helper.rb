@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
+require 'dotenv'
 require 'rspec_flat_error_formatter'
+
+Dotenv.load('.env.test')
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
