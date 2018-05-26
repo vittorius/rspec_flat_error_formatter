@@ -6,7 +6,7 @@ require 'rspec/core/formatters/console_codes'
 require 'rspec/core/formatters/base_text_formatter'
 
 class RspecFlatErrorFormatter < RSpec::Core::Formatters::BaseTextFormatter
-  TOKEN_SEPARATOR = ': '
+  TOKEN_SEPARATOR = ': '.freeze
 
   RSpec::Core::Formatters.register self, :example_passed, :example_pending, :example_failed, :start_dump
 
@@ -34,10 +34,10 @@ class RspecFlatErrorFormatter < RSpec::Core::Formatters::BaseTextFormatter
   def dump_pending(notification)
     return if notification.pending_notifications.empty?
 
-    formatted = +"\nPending: (Failures listed here are expected and do not affect your suite's status)\n\n"
+    formatted = "\nPending: (Failures listed here are expected and do not affect your suite's status)\n\n"
 
     notification.pending_notifications.each do |pending|
-      formatted << "#{pending_example_message(pending.example)}\n"
+      formatted += "#{pending_example_message(pending.example)}\n"
     end
 
     output.puts formatted
@@ -46,10 +46,10 @@ class RspecFlatErrorFormatter < RSpec::Core::Formatters::BaseTextFormatter
   def dump_failures(notification)
     return if notification.failure_notifications.empty?
 
-    formatted = +"\nFailures:\n\n"
+    formatted = "\nFailures:\n\n"
 
     notification.failure_notifications.each do |failure|
-      formatted << "#{failure_message(failure)}\n"
+      formatted += "#{failure_message(failure)}\n"
     end
 
     output.puts formatted
@@ -165,7 +165,7 @@ class RspecFlatErrorFormatter < RSpec::Core::Formatters::BaseTextFormatter
   def formatted_cause_message(cause)
     if cause.message.empty?
       class_name = exception_class_name(cause)
-      class_name.match?(/anonymous/) ? '<no message>' : class_name
+      class_name =~ /anonymous/ ? '<no message>' : class_name
     else
       cause.message
     end

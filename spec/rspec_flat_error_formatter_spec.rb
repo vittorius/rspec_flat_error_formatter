@@ -77,22 +77,22 @@ describe RspecFlatErrorFormatter do
       expect(example_spec_output_lines).to include('./spec/example_spec.rb:19: error: expected true got false')
     end
 
-    # rubocop:disable RSpec/ExampleLength
+    # rubocop:disable RSpec/ExampleLength, Metrics/LineLength
     it 'reports a failed expectation having a diff' do
       expect(example_spec_output).to(
-        include(<<~OUT)
-          ./spec/example_spec.rb:23: error: expected {:a => 1, :b => 2, :c => 3} to include {:d => 1, :e => (have attributes {:f => 2})}
-          Diff:
-          @@ -1,3 +1,4 @@
-          -:d => 1,
-          -:e => (have attributes {:f => 2}),
-          +:a => 1,
-          +:b => 2,
-          +:c => 3,
-        OUT
+        include(
+          "./spec/example_spec.rb:23: error: expected {:a => 1, :b => 2, :c => 3} to include {:d => 1, :e => (have attributes {:f => 2})}\n"\
+          "Diff:\n"\
+          "@@ -1,3 +1,4 @@\n"\
+          "-:d => 1,\n"\
+          "-:e => (have attributes {:f => 2}),\n"\
+          "+:a => 1,\n"\
+          "+:b => 2,\n"\
+          "+:c => 3,\n"
+        )
       )
     end
-    # rubocop:enable RSpec/ExampleLength
+    # rubocop:enable RSpec/ExampleLength, Metrics/LineLength
 
     it 'reports an error raised' do
       expect(example_spec_output_lines).to include(
