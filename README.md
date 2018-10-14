@@ -25,7 +25,7 @@ Although it's not recommended to use 2.1 or 2.2 as their support period has ende
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'rspec_flat_error_formatter'
+gem 'rspec_flat_error_formatter', require: false
 ```
 
 And then execute:
