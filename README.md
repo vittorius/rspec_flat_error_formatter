@@ -1,3 +1,7 @@
+# WARNING
+
+Unfortunately, this gem is discontinued and won't get any support from me anymore :unamused:. Thanks for the attention.
+
 # RspecFlatErrorFormatter
 
 [![Build Status](https://travis-ci.org/vittorius/rspec_flat_error_formatter.svg?branch=master)](https://travis-ci.org/vittorius/rspec_flat_error_formatter)
@@ -63,7 +67,7 @@ Here's an example of configuring `rspec` and `guard-rspec` using VS Code tasks t
 
 Create a `.vscode` dir under your project or workspace dir. Then, create a `tasks.json` file under it with the following contents:
 
-```json
+```json5
 {
   "version": "2.0.0",
   "tasks": [
