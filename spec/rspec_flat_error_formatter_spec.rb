@@ -57,6 +57,10 @@ describe RspecFlatErrorFormatter do
     it 'outputs correct progress info for the entire test suite' do
       expect(example_spec_output_lines).to include('.**FFFFFFFFFF')
     end
+
+    it 'outputs the timing information' do
+      expect(example_spec_output).to match(/Finished in \d+.\d+ seconds \(files took \d+.\d+ seconds to load\)./)
+    end
   end
 
   describe 'pending examples' do

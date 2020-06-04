@@ -55,9 +55,8 @@ class RspecFlatErrorFormatter < RSpec::Core::Formatters::BaseTextFormatter
     output.puts formatted
   end
 
-  def dump_summary(_notification)
-    # TODO: Finished in 0.34138 seconds (files took 0.26296 seconds to load) (copy from BaseFormatter)
-    # TODO: 1 example, 0 failures (copy from BaseFormatter)
+  def dump_summary(notification)
+    output.puts "\nFinished in #{notification.formatted_duration} (files took #{notification.formatted_load_time} to load)."
   end
 
   protected
